@@ -1,0 +1,16 @@
+TODO and Plugin projets
+//When import from CSV file, check that floats are only imported if the event type allows it. For example if the event is Fast Catch. Do not allow to select Trick Catch if data is float.
+
+
+
+
+
+
+
+//Facebook integration:
+	Plan event from program
+	Publish results
+
+Ideas:
+	Invite participants to facebookevent - button
+	

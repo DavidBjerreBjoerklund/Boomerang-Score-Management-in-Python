@@ -1,0 +1,48 @@
+,Participant,Start-Nbr.,Score,Placing,Points
+1,Stephan Spirgi,1,32.01,1,1.0
+2,Jerome Royo,2,34.14,2,2.0
+3,Jürg Schedler,3,34.5,3,3.0
+4,Takeshi Honda,4,34.91,4,4.0
+5,Fridolin Frost,5,35.34,5,5.0
+6,Manuel Schütz,6,37.86,6,6.0
+7,Karl Korhonen,7,39.23,7,7.0
+8,Klaus Häbe,8,41.17,8,8.0
+9,Mark Legg,9,41.37,9,9.0
+10,Michael Blanqett,10,43.15,10,10.0
+11,Andrea Sgattoni,11,43.97,11,11.0
+12,Thomas Szartowicz,12,44.97,12,12.0
+13,Marie Appriou,13,45.5,13,13.0
+14,Nils Bürger,14,46.26,14,14.0
+15,Lars Overzee,15,51.17,15,15.0
+16,Josef Lilienthal,16,53.5,16,16.0
+17,Tobi Giesenschlag,17,54.7,17,17.0
+18,Kevin Overzee,18,55.02,18,18.0
+19,Reinhard Thieman,19,56.26,19,19.0
+20,Pau-Thion Han,20,57.47,20,20.0
+21,H-G Hoffmann,21,58.97,21,21.0
+22,Georg Macek,22,59.06,22,22.0
+23,Yvan Madec,23,62.1,23,23.0
+24,Michael Siems,24,71.78,24,24.0
+25,Benolt Rancoule ,25,4 Caught,25,25.5
+25,Günter Möller,25,4 Caught,25,25.5
+27,Steve Kavanaugh,27,3 Caught,27,31.5
+27,Casey Larrance,27,3 Caught,27,31.5
+27,Thomas Patzer,27,3 Caught,27,31.5
+27,Adam McLaughlin,27,3 Caught,27,31.5
+27,Bruno Müller,27,3 Caught,27,31.5
+27,Matthias Giesenschlag,27,3 Caught,27,31.5
+27,Sonia Appriou,27,3 Caught,27,31.5
+27,Ruda Janout,27,3 Caught,27,31.5
+27,Henrik Mahler,27,3 Caught,27,31.5
+27,Dizzy Klöckner,27,3 Caught,27,31.5
+37,David Hesse,37,2 Caught,37,38.0
+37,Maximillian Häbe,37,2 Caught,37,38.0
+37,Michel Appriou,37,2 Caught,37,38.0
+40,Inez Lopez-Patzer,40,1 Caught,40,40.5
+40,Jan Müller-Alstrup,40,1 Caught,40,40.5
+42,Roger Aepli,42,0.0,42,42.5
+42,Maurizio Saba,42,0.0,42,42.5
+np,Harald Toft,44,np,np,47
+np,Sebastien Guiheux,44,np,np,47
+np,Peter Jacobsen,44,np,np,47
+np,Oliver Thienhaus,44,np,np,47
