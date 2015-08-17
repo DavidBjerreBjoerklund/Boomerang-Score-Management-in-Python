@@ -139,11 +139,24 @@ class CalculatePlacing:
 			self.db.commit()
 			i+=1
 
+		return True
+
+	def sumScores(self):
+		self.cursor.execute('SELECT ID,Persons.FirstName, Persons.LastName, SUM(Scores.Score) AS FinalScore FROM (Scores INNER JOIN Persons ON Scores.P_ID=Persons.ID) GROUP BY FirstName, LastName ORDER BY FinalScore DESC', (competitionID))
+		participants = self.cursor.fetchall()
+
 	def getSize(self):
 		self.size = len(self.participant_objects)+len(self.not_participants_objects)
 		return self.size
 
-CalculatePlacing('data/event.db').evaluate('1')
-CalculatePlacing('data/event.db').evaluate('2')
+# CalculatePlacing('data/event.db').evaluate('1')
+# CalculatePlacing('data/event.db').evaluate('2')
+
+# MainEvent = CalculatePlacing('data/event.db')
+# MainEvent.evaluate('1')
+# MainEvent.evaluate('2')
+
+
+
 
 			
