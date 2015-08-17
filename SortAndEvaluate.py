@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sqlite3
+import codecs
 
 #----------------- Algoritmen forklaret ------------------#
 #Foerst hentes alle scores ud i et array
@@ -142,8 +143,10 @@ class CalculatePlacing:
 		return True
 
 	def sumScores(self):
-		self.cursor.execute('SELECT ID,Persons.FirstName, Persons.LastName, SUM(Scores.Score) AS FinalScore FROM (Scores INNER JOIN Persons ON Scores.P_ID=Persons.ID) GROUP BY FirstName, LastName ORDER BY FinalScore DESC', (competitionID))
-		participants = self.cursor.fetchall()
+		self.cursor.execute('SELECT ID,Persons.FirstName, Persons.LastName, SUM(Scores.PlacingPoints) AS FinalScore FROM (Scores INNER JOIN Persons ON Scores.P_ID=Persons.ID) GROUP BY FirstName, LastName ORDER BY FinalScore ASC', )
+		return self.cursor.fetchall()
+			
+
 
 	def getSize(self):
 		self.size = len(self.participant_objects)+len(self.not_participants_objects)
@@ -152,9 +155,12 @@ class CalculatePlacing:
 # CalculatePlacing('data/event.db').evaluate('1')
 # CalculatePlacing('data/event.db').evaluate('2')
 
-# MainEvent = CalculatePlacing('data/event.db')
+MainEvent = CalculatePlacing('data/event.db')
 # MainEvent.evaluate('1')
 # MainEvent.evaluate('2')
+
+for y in MainEvent.sumScores():
+	print(y[0],y[1],y[2],y[3])
 
 
 
