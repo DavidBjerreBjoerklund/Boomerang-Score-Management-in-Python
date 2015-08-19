@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sqlite3
+import codecs
 
 #----------------- Algoritmen forklaret ------------------#
 #Foerst hentes alle scores ud i et array
@@ -141,9 +142,25 @@ class CalculatePlacing:
 
 		return True
 
-	def sumScores(self):
-		self.cursor.execute('SELECT ID,Persons.FirstName, Persons.LastName, SUM(Scores.Score) AS FinalScore FROM (Scores INNER JOIN Persons ON Scores.P_ID=Persons.ID) GROUP BY FirstName, LastName ORDER BY FinalScore DESC', (competitionID))
-		participants = self.cursor.fetchall()
+	def calcPTournamentPlacements(self):
+		self.cursor.execute('SELECT ID,Persons.FirstName, Persons.LastName, SUM(Scores.PlacingPoints) AS FinalScore FROM (Scores INNER JOIN Persons ON Scores.P_ID=Persons.ID) GROUP BY FirstName, LastName ORDER BY FinalScore ASC', )
+		finalScores = self.cursor.fetchall()
+		res = []
+		i,j,prev=1,1,None
+
+		for a in finalScores:
+			a=list(a)
+			if a[3]!=prev:
+				prev = a[3]
+				res.append(a+[j])
+				i=j
+
+			else:
+				res.append(a+[i])
+			j+=1
+		return res
+			
+
 
 	def getSize(self):
 		self.size = len(self.participant_objects)+len(self.not_participants_objects)
@@ -152,9 +169,12 @@ class CalculatePlacing:
 # CalculatePlacing('data/event.db').evaluate('1')
 # CalculatePlacing('data/event.db').evaluate('2')
 
-# MainEvent = CalculatePlacing('data/event.db')
+MainEvent = CalculatePlacing('data/event.db')
 # MainEvent.evaluate('1')
 # MainEvent.evaluate('2')
+
+for a in MainEvent.calcPTournamentPlacements():
+	print(a[4],'place :',a[1],a[2])
 
 
 
