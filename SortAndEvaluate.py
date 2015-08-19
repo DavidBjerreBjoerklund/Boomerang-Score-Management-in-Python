@@ -142,9 +142,23 @@ class CalculatePlacing:
 
 		return True
 
-	def sumScores(self):
+	def calcPTournamentPlacements(self):
 		self.cursor.execute('SELECT ID,Persons.FirstName, Persons.LastName, SUM(Scores.PlacingPoints) AS FinalScore FROM (Scores INNER JOIN Persons ON Scores.P_ID=Persons.ID) GROUP BY FirstName, LastName ORDER BY FinalScore ASC', )
-		return self.cursor.fetchall()
+		finalScores = self.cursor.fetchall()
+		res = []
+		i,j,prev=1,1,None
+
+		for a in finalScores:
+			a=list(a)
+			if a[3]!=prev:
+				prev = a[3]
+				res.append(a+[j])
+				i=j
+
+			else:
+				res.append(a+[i])
+			j+=1
+		return res
 			
 
 
@@ -159,8 +173,8 @@ MainEvent = CalculatePlacing('data/event.db')
 # MainEvent.evaluate('1')
 # MainEvent.evaluate('2')
 
-for y in MainEvent.sumScores():
-	print(y[0],y[1],y[2],y[3])
+for a in MainEvent.calcPTournamentPlacements():
+	print(a[4],'place :',a[1],a[2])
 
 
 
