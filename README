@@ -1,16 +1,104 @@
-TODO and Plugin projets
-//When import from CSV file, check that floats are only imported if the event type allows it. For example if the event is Fast Catch. Do not allow to select Trick Catch if data is float.
+# Boomerang Score Management
 
+Boomerang Score Management is a modernised toolkit for running International Federation of Boomerang Associations (IFBA) tournaments. It replaces the original ad-hoc Tkinter scripts with a structured Python package that provides:
 
+- A relational domain model for athletes, events, and results using SQLModel.
+- Discipline-aware scoring logic that mirrors IFBA tie-handling rules.
+- A FastAPI backend with endpoints for creating events, importing results, and exposing live standings.
+- A Typer-based command line interface for tournament administrators.
+- Automated tests covering the core ranking algorithms.
 
+The goal is to make it easy to import CSV exports from field scorekeepers, compute official standings with confidence, and serve the results to modern web frontends or third-party tools.
 
+## Project layout
 
+```
+.
+├── data/               # Sample datasets and the default SQLite database location
+├── src/boomerang/
+│   ├── api/            # FastAPI routers and response schemas
+│   ├── domain/         # Discipline metadata and scoring configuration
+│   ├── services/       # Importers and scoring routines
+│   ├── models.py       # SQLModel ORM definitions
+│   ├── repositories.py # Data-access helpers built on SQLModel
+│   └── cli.py          # Typer-powered CLI entrypoint
+└── tests/              # pytest suite for ranking logic
+```
 
+Legacy scripts (`ImportCSVtoDB.py`, `SortAndEvaluate.py`, `dbTools.py`) remain in place for reference but are no longer required for day-to-day workflows.
 
-//Facebook integration:
-	Plan event from program
-	Publish results
+## Getting started
 
-Ideas:
-	Invite participants to facebookevent - button
-	
+### 1. Set up a virtual environment
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -e .[dev]
+```
+
+### 2. Initialise the database
+
+```bash
+boomerang init-db
+```
+
+By default the application stores data in `data/boomerang.db` (SQLite). Adjust the database location by setting the `BOOMERANG_DATABASE_URL` environment variable before running commands.
+
+### 3. Import historical results
+
+The CLI can create events and ingest CSV files in the format already bundled with the repository.
+
+```bash
+# Create a new Fast Catch event and import the sample CSV
+boomerang create-event "Fast Catch 2023" fast-catch --start-date 2023-08-19
+boomerang import-csv data/fastcatch.csv --discipline fast-catch --event-id 1
+
+# Or create and import in a single step
+boomerang import-csv data/accuracy.csv --discipline accuracy --name "Accuracy 2023"
+```
+
+Every import automatically recomputes placings and IFBA points, handling ties by averaging the shared rank positions (e.g. tied third place earns 4 points).
+
+## Running the web API
+
+Start the FastAPI server with uvicorn:
+
+```bash
+uvicorn boomerang.api.app:app --reload
+```
+
+Key endpoints:
+
+- `GET /disciplines` — supported discipline metadata (name, scoring direction, IFBA reference).
+- `POST /events` — create a new event (`name`, `discipline`, optional `start_date`).
+- `POST /events/{event_id}/results` — import or update competitor results from JSON payloads.
+- `GET /events/{event_id}/results` — retrieve ranked results suitable for modern frontends.
+
+The API is intentionally stateless and ready to back a rich web interface or mobile app.
+
+## Testing
+
+```bash
+pytest
+```
+
+The suite currently verifies the ranking engine. Add further tests for importers, repositories, and API endpoints as the platform evolves.
+
+## Configuration
+
+Runtime settings are read from environment variables prefixed with `BOOMERANG_`. The most common override is:
+
+- `BOOMERANG_DATABASE_URL` — SQLAlchemy-style database URL (defaults to the bundled SQLite file).
+
+A `.env` file in the project root is honoured automatically.
+
+## Roadmap
+
+- Expand the discipline catalogue (Trick Catch, Endurance, Aussie Round) with rule-specific scoring modules.
+- Build a React/TypeScript frontend that consumes the FastAPI endpoints for live event management.
+- Add authentication, audit logs, and publishing workflows for official tournaments.
+- Integrate CI/CD pipelines, database migrations, and deployment tooling.
+
+Contributions are welcome—open issues or submit pull requests that bring us closer to a fully featured IFBA tournament platform.
